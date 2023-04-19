@@ -1,8 +1,8 @@
 grammar KrrgScript;
 
-program: function*;
+program: functionDeclaration*;
 
-function: FUNCTION_IDENTIFIER argumentIdentifierList compoundStatement;
+functionDeclaration: name=FUNCTION_IDENTIFIER argumentIdentifierList compoundStatement;
 
 argumentIdentifierList
     : '(' ')'
@@ -20,20 +20,22 @@ statement
     : expressionStatement
     | selectionStatement
     | whileStatement
+    | jumpStatement
+    | emptyStatement
     ;
 
 expressionStatement: expression ';';
 
 selectionStatement
-    : ifStatement
-    | ifElseStatement
+    : IF '(' expression ')' compoundStatement
+    | IF '(' expression ')' compoundStatement ELSE compoundStatement
     ;
 
-ifStatement: IF '(' expression ')' compoundStatement;
-
-ifElseStatement: IF '(' expression ')' compoundStatement ELSE compoundStatement;
-
 whileStatement: WHILE '(' expression ')' compoundStatement;
+
+jumpStatement: FREEZE expression ';';
+
+emptyStatement: ';';
 
 expression: assignmentExpression;
 
@@ -74,7 +76,7 @@ multiplicativeExpression
 
 unaryExpression
     : postfixExpression
-    | (ADDITIVE_OPERATOR | '!') unaryExpression // AdditiveとLexerが被っちゃうの悲しいね
+    | op=(ADDITIVE_OPERATOR | '!') unaryExpression // AdditiveとLexerが被っちゃうの悲しいね
     ;
 
 postfixExpression
@@ -99,6 +101,8 @@ ELSE: 'else';
 
 WHILE: 'while';
 
+FREEZE: 'freeze';
+
 ASSIGNMENT_OPERATOR: '=';
 
 LOGICAL_OR_OPERATOR: '||';
@@ -116,7 +120,7 @@ FUNCTION_IDENTIFIER: 'k' 'r'+ 'g_mrh';
 
 KRRGMRH: 'krrgmrh';
 
-BUILTIN_FUNCTION: '#くるるぎはっぴょうかい' | '#みるは〜と' | 'freeze'; // ここに書くことじゃない気はする
+BUILTIN_FUNCTION: '#くるるぎはっぴょうかい' | '#みるは〜と'; // ここに書くことじゃない気はする
 
 WS: [ \t\r\n]+ -> skip;
 

@@ -5,7 +5,8 @@
   "repository": "git@github.com:HauntedMirror/krrg-script.git",
   "author": "HauntedMirror",
   "scripts": {
-    "prepare": "antlr4ts antlr/KrrgScript.g4 -visitor -o dist"
+    "prepare": "antlr4ts antlr/KrrgScript.g4 -visitor -o dist",
+    "test": "jest"
   },
   "dependencies": {
     "antlr4ts": "^0.5.0-alpha.4"

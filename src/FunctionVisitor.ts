@@ -1,6 +1,6 @@
 import { KrrgScriptVisitor } from '../dist/antlr/KrrgScriptVisitor';
 import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor';
-import { AdditiveExpressionContext, ArgumentExpressionListContext, AssignmentExpressionContext, CompoundStatementContext, EqualityExpressionContext, ExpressionContext, ExpressionStatementContext, FunctionCallExpressionContext, FunctionDeclarationContext, JumpStatementContext, LogicalAndExpressionContext, LogicalOrExpressionContext, MultiplicativeExpressionContext, PostfixExpressionContext, PrimaryExpressionContext, ProgramContext, RelationalExpressionContext, SelectionStatementContext, StatementContext, UnaryExpressionContext, WhileStatementContext } from '../dist/antlr/KrrgScriptParser';
+import { AdditiveExpressionContext, ArgumentExpressionListContext, AssignmentExpressionContext, CompoundStatementContext, EmptyStatementContext, EqualityExpressionContext, ExpressionContext, ExpressionStatementContext, FunctionCallExpressionContext, FunctionDeclarationContext, JumpStatementContext, LogicalAndExpressionContext, LogicalOrExpressionContext, MultiplicativeExpressionContext, PostfixExpressionContext, PrimaryExpressionContext, ProgramContext, RelationalExpressionContext, SelectionStatementContext, StatementContext, UnaryExpressionContext, WhileStatementContext } from '../dist/antlr/KrrgScriptParser';
 
 import { UndefinedParseError } from './error/UndefinedParseError';
 import { UnimplementedParseError } from './error/UnimplementedParseError';
@@ -10,14 +10,16 @@ import { NameNotFoundError } from './error/NameNotFoundError';
 import { BuiltinFunctions } from './ProgramVisitor';
 
 
-function krrgmrh(date?: Date): number {
+export function krrgmrh(date?: Date): number {
   const krrgDebutDate = new Date(2022, 4, 30);
   const now = date || new Date();
-  const diff = now.getTime() - krrgDebutDate.getTime();
-  return Math.floor(diff / (365 * 24 * 60 * 60 * 1000));
+  const yearDiff = now.getFullYear() - krrgDebutDate.getFullYear();
+  const beforeDebut = (now.getMonth() < krrgDebutDate.getMonth() ||
+    (now.getMonth() == krrgDebutDate.getMonth() && now.getDate() < krrgDebutDate.getDate())) ? -1 : 0;
+  return yearDiff + beforeDebut;
 }
 
-class Result {
+export class Result {
   public readonly returned: boolean;
   public readonly value: number;
   constructor(returned: boolean, value?: number) {
@@ -77,6 +79,7 @@ export class FunctionVisitor extends AbstractParseTreeVisitor<Result> implements
     const selectionStatement = ctx.selectionStatement();
     const whileStatement = ctx.whileStatement();
     const jumpStatement = ctx.jumpStatement();
+    const emptyStatement = ctx.emptyStatement();
     if (expressionStatement) {
       return this.expressionStatement(expressionStatement);
     } else if (selectionStatement) {
@@ -85,6 +88,8 @@ export class FunctionVisitor extends AbstractParseTreeVisitor<Result> implements
       return this.whileStatement(whileStatement);
     } else if (jumpStatement) {
       return this.jumpStatement(jumpStatement);
+    } else if (emptyStatement) {
+      return this.emptyStatement(emptyStatement);
     }
     throw new UndefinedParseError(ctx.start.line);
   }
@@ -116,6 +121,10 @@ export class FunctionVisitor extends AbstractParseTreeVisitor<Result> implements
 
   jumpStatement(ctx: JumpStatementContext): Result {
     return new Result(true, this.expression(ctx.expression()));
+  }
+
+  emptyStatement(ctx: EmptyStatementContext): Result {
+    return new Result(false);
   }
 
   expression(ctx: ExpressionContext): number {
@@ -241,7 +250,7 @@ export class FunctionVisitor extends AbstractParseTreeVisitor<Result> implements
       if (op.text == '*') {
         return left * right;
       } else if (op.text == '/') {
-        return left / right;
+        return Math.floor(left / right);
       } else if (op.text == '%') {
         return left % right;
       } else {

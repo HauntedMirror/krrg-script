@@ -21,6 +21,7 @@ statement
     | selectionStatement
     | whileStatement
     | jumpStatement
+    | emptyStatement
     ;
 
 expressionStatement: expression ';';
@@ -32,7 +33,9 @@ selectionStatement
 
 whileStatement: WHILE '(' expression ')' compoundStatement;
 
-jumpStatement: FREEZE expression;
+jumpStatement: FREEZE expression ';';
+
+emptyStatement: ';';
 
 expression: assignmentExpression;
 

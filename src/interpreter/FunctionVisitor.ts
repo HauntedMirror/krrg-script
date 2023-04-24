@@ -309,7 +309,7 @@ export class FunctionVisitor extends AbstractParseTreeVisitor<Result> implements
   functionCallExpression(ctx: FunctionCallExpressionContext): number {
     const FUNCTION_IDENTIFIER = ctx.FUNCTION_IDENTIFIER();
     const BUILTIN_FUNCTION = ctx.BUILTIN_FUNCTION();
-    if (FUNCTION_IDENTIFIER) {
+    if (FUNCTION_IDENTIFIER !== undefined) {
       const name = FUNCTION_IDENTIFIER.text;
       const args = this.argumentExpressionList(ctx.argumentExpressionList());
       const func = this.functionMap.get(name);
@@ -317,8 +317,8 @@ export class FunctionVisitor extends AbstractParseTreeVisitor<Result> implements
         throw new NameNotFoundError(ctx.start.line, name);
       }
       const visitor = new FunctionVisitor(this.functionMap, this.builtin);
-      visitor.invoke(func, args);
-    } else if (BUILTIN_FUNCTION) {
+      return visitor.invoke(func, args);
+    } else if (BUILTIN_FUNCTION !== undefined) {
       const args = this.argumentExpressionList(ctx.argumentExpressionList());
       // 抽象化したい
       const name = BUILTIN_FUNCTION.text;

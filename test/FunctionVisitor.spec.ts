@@ -1,8 +1,8 @@
 import { CommonTokenStream, ANTLRInputStream } from 'antlr4ts';
 import { KrrgScriptLexer } from '../dist/antlr/KrrgScriptLexer';
 import { KrrgScriptParser } from '../dist/antlr/KrrgScriptParser';
-import { FunctionVisitor, krrgmrh, Result } from '../src/FunctionVisitor';
-import { ProgramVisitor, BuiltinFunctions } from '../src/ProgramVisitor';
+import { FunctionVisitor, krrgmrh, Result } from '../src/interpreter/FunctionVisitor';
+import { ProgramVisitor, BuiltinFunctions } from '../src/interpreter/ProgramVisitor';
 import { FunctionDeclarationContext } from '../dist/antlr/KrrgScriptParser';
 
 describe("FunctionVisitor", () => {

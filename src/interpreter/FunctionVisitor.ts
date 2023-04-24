@@ -1,6 +1,6 @@
-import { KrrgScriptVisitor } from '../dist/antlr/KrrgScriptVisitor';
+import { KrrgScriptVisitor } from '../../dist/antlr/KrrgScriptVisitor';
 import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor';
-import { AdditiveExpressionContext, ArgumentExpressionListContext, AssignmentExpressionContext, CompoundStatementContext, EmptyStatementContext, EqualityExpressionContext, ExpressionContext, ExpressionStatementContext, FunctionCallExpressionContext, FunctionDeclarationContext, JumpStatementContext, LogicalAndExpressionContext, LogicalOrExpressionContext, MultiplicativeExpressionContext, PostfixExpressionContext, PrimaryExpressionContext, ProgramContext, RelationalExpressionContext, SelectionStatementContext, StatementContext, UnaryExpressionContext, WhileStatementContext } from '../dist/antlr/KrrgScriptParser';
+import { AdditiveExpressionContext, ArgumentExpressionListContext, AssignmentExpressionContext, CompoundStatementContext, EmptyStatementContext, EqualityExpressionContext, ExpressionContext, ExpressionStatementContext, FunctionCallExpressionContext, FunctionDeclarationContext, JumpStatementContext, LogicalAndExpressionContext, LogicalOrExpressionContext, MultiplicativeExpressionContext, PostfixExpressionContext, PrimaryExpressionContext, ProgramContext, RelationalExpressionContext, SelectionStatementContext, StatementContext, UnaryExpressionContext, WhileStatementContext } from '../../dist/antlr/KrrgScriptParser';
 
 import { UndefinedParseError } from './error/UndefinedParseError';
 import { UnimplementedParseError } from './error/UnimplementedParseError';
@@ -309,7 +309,7 @@ export class FunctionVisitor extends AbstractParseTreeVisitor<Result> implements
   functionCallExpression(ctx: FunctionCallExpressionContext): number {
     const FUNCTION_IDENTIFIER = ctx.FUNCTION_IDENTIFIER();
     const BUILTIN_FUNCTION = ctx.BUILTIN_FUNCTION();
-    if (FUNCTION_IDENTIFIER) {
+    if (FUNCTION_IDENTIFIER !== undefined) {
       const name = FUNCTION_IDENTIFIER.text;
       const args = this.argumentExpressionList(ctx.argumentExpressionList());
       const func = this.functionMap.get(name);
@@ -317,8 +317,8 @@ export class FunctionVisitor extends AbstractParseTreeVisitor<Result> implements
         throw new NameNotFoundError(ctx.start.line, name);
       }
       const visitor = new FunctionVisitor(this.functionMap, this.builtin);
-      visitor.invoke(func, args);
-    } else if (BUILTIN_FUNCTION) {
+      return visitor.invoke(func, args);
+    } else if (BUILTIN_FUNCTION !== undefined) {
       const args = this.argumentExpressionList(ctx.argumentExpressionList());
       // 抽象化したい
       const name = BUILTIN_FUNCTION.text;

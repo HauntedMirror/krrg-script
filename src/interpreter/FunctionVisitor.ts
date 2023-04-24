@@ -1,6 +1,6 @@
-import { KrrgScriptVisitor } from '../dist/antlr/KrrgScriptVisitor';
+import { KrrgScriptVisitor } from '../../dist/antlr/KrrgScriptVisitor';
 import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor';
-import { AdditiveExpressionContext, ArgumentExpressionListContext, AssignmentExpressionContext, CompoundStatementContext, EmptyStatementContext, EqualityExpressionContext, ExpressionContext, ExpressionStatementContext, FunctionCallExpressionContext, FunctionDeclarationContext, JumpStatementContext, LogicalAndExpressionContext, LogicalOrExpressionContext, MultiplicativeExpressionContext, PostfixExpressionContext, PrimaryExpressionContext, ProgramContext, RelationalExpressionContext, SelectionStatementContext, StatementContext, UnaryExpressionContext, WhileStatementContext } from '../dist/antlr/KrrgScriptParser';
+import { AdditiveExpressionContext, ArgumentExpressionListContext, AssignmentExpressionContext, CompoundStatementContext, EmptyStatementContext, EqualityExpressionContext, ExpressionContext, ExpressionStatementContext, FunctionCallExpressionContext, FunctionDeclarationContext, JumpStatementContext, LogicalAndExpressionContext, LogicalOrExpressionContext, MultiplicativeExpressionContext, PostfixExpressionContext, PrimaryExpressionContext, ProgramContext, RelationalExpressionContext, SelectionStatementContext, StatementContext, UnaryExpressionContext, WhileStatementContext } from '../../dist/antlr/KrrgScriptParser';
 
 import { UndefinedParseError } from './error/UndefinedParseError';
 import { UnimplementedParseError } from './error/UnimplementedParseError';

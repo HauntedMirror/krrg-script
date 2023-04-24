@@ -1,5 +1,5 @@
-import { KrrgScriptLexer } from '../dist/antlr/KrrgScriptLexer';
-import { KrrgScriptParser } from '../dist/antlr/KrrgScriptParser';
+import { KrrgScriptLexer } from '../../dist/antlr/KrrgScriptLexer';
+import { KrrgScriptParser } from '../../dist/antlr/KrrgScriptParser';
 import { FunctionVisitor } from './FunctionVisitor';
 
 import { ProgramVisitor, BuiltinFunctions } from './ProgramVisitor';

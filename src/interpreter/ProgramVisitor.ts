@@ -1,6 +1,6 @@
-import { KrrgScriptVisitor } from '../dist/antlr/KrrgScriptVisitor';
+import { KrrgScriptVisitor } from '../../dist/antlr/KrrgScriptVisitor';
 import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor';
-import { FunctionDeclarationContext, ProgramContext } from '../dist/antlr/KrrgScriptParser';
+import { FunctionDeclarationContext, ProgramContext } from '../../dist/antlr/KrrgScriptParser';
 
 import { UndefinedParseError } from './error/UndefinedParseError';
 

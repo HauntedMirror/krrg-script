@@ -4,7 +4,7 @@ import Editor from '../editor/Editor';
 import Interpreter from '../../../interpreter/interpreter';
 import {BuiltinFunctions} from '../../../interpreter/ProgramVisitor';
 
-export function ProgramArea() {
+export default function ProgramArea() {
   const [code, setCode] = useState('');
 
   const [arg, setArg] = useState('');

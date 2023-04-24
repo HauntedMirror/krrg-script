@@ -9,7 +9,7 @@ krrg_mrh(krrg_sub) {
   krrrrg_sub = krg_sub;
   while (krrrrg_sub < krrg_sub) {
     if (krrrrg_sub % (krg_sub + krg_sub) == krrrg_sub) {
-      #くるるぎはっぴょうかい(krrrrg_sub)
+      #くるるぎはっぴょうかい(krrrrg_sub);
     }
     krrrrg_sub = krrrrg_sub + krg_sub;
   }

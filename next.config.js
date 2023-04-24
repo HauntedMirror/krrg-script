@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const repo = 'change-me-to-your-repo';
+const repo = 'krrg-script';
 const assetPrefix = `/${repo}/`;
 const basePath = `/${repo}`;
 const nextConfig = {

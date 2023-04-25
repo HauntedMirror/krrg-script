@@ -1,1 +1,0 @@
-(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[976],{5982:function(n,_,o){(window.__NEXT_P=window.__NEXT_P||[]).push(["/components/ProgramArea/ProgramArea",function(){return o(3464)}])}},function(n){n.O(0,[774,645,464,888,179],function(){return n(n.s=5982)}),_N_E=n.O()}]);

@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import Editor from '../editor/Editor';
 
-import Interpreter from '../../../interpreter/interpreter';
-import {BuiltinFunctions} from '../../../interpreter/ProgramVisitor';
-
 export default function ProgramArea() {
   const [code, setCode] = useState('');
 
@@ -13,44 +10,32 @@ export default function ProgramArea() {
 
   const resultData: string[] = [];
 
-  const builtins: BuiltinFunctions = new Map();
-
-  builtins.set('#くるるぎはっぴょうかい', (args: number[]) => {
-    console.log(args[0]);
-    resultData.push(args[0].toString());
-    const output = resultData.join("");
-    setResult(output);
-    return args.length;
-  })
-
-  builtins.set('#みるは〜と', (args: number[]) => {
-    console.log(String.fromCharCode(args[0]));
-    resultData.push(String.fromCharCode(args[0]));
-    const output = resultData.map((val) => val.toString()).join("");
-    setResult(output);
-    return args.length;
-  })
-
-    const interpreter = new Interpreter(builtins);
-
-    const execute = () => {
+  const execute = () => {
     resultData.splice(0);
-    interpreter.run(code, [Number.parseInt(arg)]);
+    const worker = new Worker(new URL('../../../interpreter/interpreter-worker.ts', import.meta.url));
+    worker.onmessage = (message) => {
+      const data = JSON.parse(message.data);
+      if (data.type === "console") {
+        resultData.push(data.data);
+      }
+      const output = resultData.join("");
+      setResult(output);
+    };
+    worker.postMessage(JSON.stringify({ src: code, args: [(Number.parseInt(arg))] }));
   };
-
   return (
-        <>
-            <section>
-                <Editor
-                    onChange={setCode}
-                />
-            </section>
-            <section>
-                <input type="number" value={arg} onChange={(e) => setArg(e.target.value) } /><button onClick={execute}>実行</button>
-            </section>
-            <section>
-                {result}
-            </section>
-        </>
-    );
+    <>
+      <section>
+        <Editor
+          onChange={setCode}
+        />
+      </section>
+      <section>
+        <input type="number" value={arg} onChange={(e) => setArg(e.target.value)} /><button onClick={execute}>実行</button>
+      </section>
+      <section>
+        {result}
+      </section>
+    </>
+  );
 }

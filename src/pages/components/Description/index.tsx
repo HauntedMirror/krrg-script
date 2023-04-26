@@ -6,7 +6,7 @@ import markdown from './README.md';
 export default function Description() {
   return (
     <Card sx={{ width: 600, margin: 'auto' }}>
-      <ReactMarkdown children={markdown} />
+      <ReactMarkdown>{markdown}</ReactMarkdown>
     </Card>
   )
 }

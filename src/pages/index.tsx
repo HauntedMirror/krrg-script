@@ -11,7 +11,7 @@ export default function Home() {
       <Box display="flex" justifyContent="center" p={1}>
         <Typography variant="h3">くるるぎすくりぷと</Typography>
       </Box>
-      <Grid container justify="center" alignItems="flex-start">
+      <Grid container justifyContent="center" alignItems="flex-start">
         <Grid item xs><ProgramArea /></Grid>
         <Grid item xs><Description /></Grid>
       </Grid>

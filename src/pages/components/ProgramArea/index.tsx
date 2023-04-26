@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import Editor from '../editor/Editor';
+import Editor from '../Editor';
+import Box from '@mui/material/Box'
+import Card from '@mui/material/Card'
+
+import dynamic from 'next/dynamic';
+const AceEditor = dynamic(async () => import('react-ace'), { ssr: false });
 
 export default function ProgramArea() {
   const [code, setCode] = useState('');
@@ -33,7 +38,7 @@ export default function ProgramArea() {
     worker.postMessage(JSON.stringify({ src: code, args: [(Number.parseInt(arg))] }));
   };
   return (
-    <>
+    <Card sx={{ width:600, margin:'auto' }}>
       <section>
         <Editor
           onChange={setCode}
@@ -44,8 +49,13 @@ export default function ProgramArea() {
         {state}
       </section>
       <section>
-        {result}
+        <AceEditor
+          readOnly={true}
+          height="100px"
+          value={result}
+          showGutter={false}
+        />
       </section>
-    </>
+    </Card>
   );
 }

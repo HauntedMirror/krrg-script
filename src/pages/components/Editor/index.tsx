@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import dynamic from 'next/dynamic';
+import Box from '@mui/material/Box'
 
 const AceEditor = dynamic(async () => import('react-ace'), { ssr: false });
 
@@ -9,9 +10,12 @@ type propsType = {
 
 export function Editor(props: propsType) {
   return (
-    <AceEditor
-    onChange={props.onChange}
-    />
+    <Box>
+      <AceEditor
+        onChange={props.onChange}
+        width='100%'
+      />
+    </Box>
   )
 }
 

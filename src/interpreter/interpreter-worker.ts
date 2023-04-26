@@ -24,7 +24,7 @@ self.addEventListener("message", (e) => {
     self.postMessage(JSON.stringify(data));
     return args[0];
   });
-  builtins.set('#みるは〜と', (args: number[]) => {
+  builtins.set('#みるは～と', (args: number[]) => {
     const data: OutputData = {
       type: "console",
       data: String.fromCharCode(args[0]),

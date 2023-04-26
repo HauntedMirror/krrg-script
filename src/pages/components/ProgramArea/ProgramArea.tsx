@@ -8,15 +8,24 @@ export default function ProgramArea() {
 
   const [result, setResult] = useState('');
 
+  const [state, setState] = useState('stopped');
+
   const resultData: string[] = [];
 
   const execute = () => {
     resultData.splice(0);
+    setState('running...');
     const worker = new Worker(new URL('../../../interpreter/interpreter-worker.ts', import.meta.url));
     worker.onmessage = (message) => {
       const data = JSON.parse(message.data);
       if (data.type === "console") {
         resultData.push(data.data);
+      } else if (data.type === "Error") {
+        console.log(data.data);
+        resultData.push(data.data);
+        setState('stopped');
+      } else if (data.type == "OK") {
+        setState('stopped');
       }
       const output = resultData.join("");
       setResult(output);
@@ -32,6 +41,7 @@ export default function ProgramArea() {
       </section>
       <section>
         <input type="number" value={arg} onChange={(e) => setArg(e.target.value)} /><button onClick={execute}>実行</button>
+        {state}
       </section>
       <section>
         {result}

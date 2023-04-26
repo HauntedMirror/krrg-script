@@ -8,9 +8,6 @@ interface OutputData {
 
 self.addEventListener("message", (e) => {
   const builtins: BuiltinFunctions = new Map();
-
-  self.postMessage(JSON.stringify({ type: "console", data: "started" }));
-
   builtins.set('#くるるぎはっぴょうかい', (args: number[]) => {
     const data: OutputData = {
       type: "console",
@@ -29,7 +26,10 @@ self.addEventListener("message", (e) => {
   } catch (e) {
     if (e instanceof Error) {
       const result = { type: "Error", data: e.message };
+      console.log(result);
       self.postMessage(JSON.stringify(result));
+    } else {
+      console.log(typeof e);
     }
   }
 });

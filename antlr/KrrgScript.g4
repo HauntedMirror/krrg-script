@@ -120,7 +120,7 @@ FUNCTION_IDENTIFIER: 'k' 'r'+ 'g_mrh';
 
 KRRGMRH: 'krrgmrh';
 
-BUILTIN_FUNCTION: '#くるるぎはっぴょうかい' | '#みるは〜と'; // ここに書くことじゃない気はする
+BUILTIN_FUNCTION: '#くるるぎはっぴょうかい' | '#みるは〜と' | #みるは〜と; // ここに書くことじゃない気はする
 
 WS: [ \t\r\n]+ -> skip;
 

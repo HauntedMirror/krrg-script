@@ -24,6 +24,14 @@ self.addEventListener("message", (e) => {
     self.postMessage(JSON.stringify(data));
     return args[0];
   });
+  builtins.set('#みるは〜と', (args: number[]) => {
+    const data: OutputData = {
+      type: "console",
+      data: String.fromCharCode(args[0]),
+    }
+    self.postMessage(JSON.stringify(data));
+    return args[0];
+  });
   const data = JSON.parse(e.data);
   const src = data.src;
   const interpreter = new Interpreter(builtins);

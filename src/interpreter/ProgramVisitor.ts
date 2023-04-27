@@ -1,12 +1,18 @@
-import { KrrgScriptVisitor } from '../../dist/antlr/KrrgScriptVisitor';
-import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor';
-import { FunctionDeclarationContext, ProgramContext } from '../../dist/antlr/KrrgScriptParser';
+import { KrrgScriptVisitor } from "../../dist/antlr/KrrgScriptVisitor";
+import { AbstractParseTreeVisitor } from "antlr4ts/tree/AbstractParseTreeVisitor";
+import {
+  FunctionDeclarationContext,
+  ProgramContext,
+} from "../../dist/antlr/KrrgScriptParser";
 
-import { UndefinedParseError } from './error/UndefinedParseError';
+import { UndefinedParseError } from "./error/UndefinedParseError";
 
 export type BuiltinFunctions = Map<string, (args: number[]) => number>;
 
-export class ProgramVisitor extends AbstractParseTreeVisitor<Map<string, FunctionDeclarationContext>> implements KrrgScriptVisitor<Map<string, FunctionDeclarationContext>> {
+export class ProgramVisitor
+  extends AbstractParseTreeVisitor<Map<string, FunctionDeclarationContext>>
+  implements KrrgScriptVisitor<Map<string, FunctionDeclarationContext>>
+{
   private map: Map<string, FunctionDeclarationContext>;
   constructor() {
     super();
@@ -24,7 +30,9 @@ export class ProgramVisitor extends AbstractParseTreeVisitor<Map<string, Functio
     return this.map;
   }
 
-  visitFunctionDeclaration(ctx: FunctionDeclarationContext): Map<string, FunctionDeclarationContext> {
+  visitFunctionDeclaration(
+    ctx: FunctionDeclarationContext
+  ): Map<string, FunctionDeclarationContext> {
     console.log(ctx.FUNCTION_IDENTIFIER().text);
     if (!ctx._name.text) {
       throw new UndefinedParseError(ctx._start.line);

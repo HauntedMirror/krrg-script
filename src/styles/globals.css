@@ -1,8 +1,7 @@
 body {
-  background-image: url('/krrg-script/background.jpg');
+  background-image: url("/krrg-script/background.jpg");
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
   opacity: 0.95;
 }
-

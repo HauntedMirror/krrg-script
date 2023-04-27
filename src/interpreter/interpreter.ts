@@ -1,19 +1,30 @@
-import { KrrgScriptLexer } from '../../dist/antlr/KrrgScriptLexer';
-import { KrrgScriptParser } from '../../dist/antlr/KrrgScriptParser';
-import { FunctionVisitor } from './FunctionVisitor';
+import { KrrgScriptLexer } from "../../dist/antlr/KrrgScriptLexer";
+import { KrrgScriptParser } from "../../dist/antlr/KrrgScriptParser";
+import { FunctionVisitor } from "./FunctionVisitor";
 
-import { ProgramVisitor, BuiltinFunctions } from './ProgramVisitor';
+import { ProgramVisitor, BuiltinFunctions } from "./ProgramVisitor";
 
-import { CommonTokenStream, ANTLRInputStream, BailErrorStrategy, ANTLRErrorListener, Recognizer, RecognitionException } from 'antlr4ts';
-
+import {
+  CommonTokenStream,
+  ANTLRInputStream,
+  BailErrorStrategy,
+  ANTLRErrorListener,
+  Recognizer,
+  RecognitionException,
+} from "antlr4ts";
 
 class ThrowingErrorListener<V> implements ANTLRErrorListener<V> {
-  syntaxError<T extends V>(_recognizer: Recognizer<T, any>, _offendingSymbol: T | undefined, line: number, charPositionInLine: number, msg: string, e: RecognitionException | undefined): void {
+  syntaxError<T extends V>(
+    _recognizer: Recognizer<T, any>,
+    _offendingSymbol: T | undefined,
+    line: number,
+    charPositionInLine: number,
+    msg: string,
+    e: RecognitionException | undefined
+  ): void {
     throw new Error(`line ${line}:${charPositionInLine} ${msg}`);
   }
 }
-
-
 
 export default class Interpreter {
   private readonly builtins: BuiltinFunctions;
@@ -34,7 +45,7 @@ export default class Interpreter {
       const programVisitor = new ProgramVisitor();
       const functions = programVisitor.visit(tree);
 
-      const entrypoint = functions.get('krrg_mrh');
+      const entrypoint = functions.get("krrg_mrh");
 
       const functionVisitor = new FunctionVisitor(functions, this.builtins);
 
@@ -47,4 +58,3 @@ export default class Interpreter {
     }
   }
 }
-

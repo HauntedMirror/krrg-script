@@ -1,5 +1,5 @@
-# krrg-script
-VTuberの枢木みるはさんの1周年を祝うために作成したものです。
+# くるるぎすくりぷと
+VTuberの枢木みるはさん([Twitter](https://twitter.com/krrgmrh))([YouTube](https://www.youtube.com/c/KururugiMiruha))の1周年を祝うために作成したものです。
 ## 例
 ```
 // 引数未満の、正の偶数をすべて出力します。

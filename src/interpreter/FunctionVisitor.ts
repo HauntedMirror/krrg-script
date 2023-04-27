@@ -1,21 +1,47 @@
-import { KrrgScriptVisitor } from '../../dist/antlr/KrrgScriptVisitor';
-import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor';
-import { AdditiveExpressionContext, ArgumentExpressionListContext, AssignmentExpressionContext, CompoundStatementContext, EmptyStatementContext, EqualityExpressionContext, ExpressionContext, ExpressionStatementContext, FunctionCallExpressionContext, FunctionDeclarationContext, JumpStatementContext, LogicalAndExpressionContext, LogicalOrExpressionContext, MultiplicativeExpressionContext, PostfixExpressionContext, PrimaryExpressionContext, ProgramContext, RelationalExpressionContext, SelectionStatementContext, StatementContext, UnaryExpressionContext, WhileStatementContext } from '../../dist/antlr/KrrgScriptParser';
+import { KrrgScriptVisitor } from "../../dist/antlr/KrrgScriptVisitor";
+import { AbstractParseTreeVisitor } from "antlr4ts/tree/AbstractParseTreeVisitor";
+import {
+  AdditiveExpressionContext,
+  ArgumentExpressionListContext,
+  AssignmentExpressionContext,
+  CompoundStatementContext,
+  EmptyStatementContext,
+  EqualityExpressionContext,
+  ExpressionContext,
+  ExpressionStatementContext,
+  FunctionCallExpressionContext,
+  FunctionDeclarationContext,
+  JumpStatementContext,
+  LogicalAndExpressionContext,
+  LogicalOrExpressionContext,
+  MultiplicativeExpressionContext,
+  PostfixExpressionContext,
+  PrimaryExpressionContext,
+  ProgramContext,
+  RelationalExpressionContext,
+  SelectionStatementContext,
+  StatementContext,
+  UnaryExpressionContext,
+  WhileStatementContext,
+} from "../../dist/antlr/KrrgScriptParser";
 
-import { UndefinedParseError } from './error/UndefinedParseError';
-import { UnimplementedParseError } from './error/UnimplementedParseError';
-import { InternalError } from './error/InternalError';
-import { NameNotFoundError } from './error/NameNotFoundError';
+import { UndefinedParseError } from "./error/UndefinedParseError";
+import { UnimplementedParseError } from "./error/UnimplementedParseError";
+import { InternalError } from "./error/InternalError";
+import { NameNotFoundError } from "./error/NameNotFoundError";
 
-import { BuiltinFunctions } from './ProgramVisitor';
-
+import { BuiltinFunctions } from "./ProgramVisitor";
 
 export function krrgmrh(date?: Date): number {
   const krrgDebutDate = new Date(2022, 4, 30);
   const now = date || new Date();
   const yearDiff = now.getFullYear() - krrgDebutDate.getFullYear();
-  const beforeDebut = (now.getMonth() < krrgDebutDate.getMonth() ||
-    (now.getMonth() == krrgDebutDate.getMonth() && now.getDate() < krrgDebutDate.getDate())) ? -1 : 0;
+  const beforeDebut =
+    now.getMonth() < krrgDebutDate.getMonth() ||
+    (now.getMonth() == krrgDebutDate.getMonth() &&
+      now.getDate() < krrgDebutDate.getDate())
+      ? -1
+      : 0;
   return yearDiff + beforeDebut;
 }
 
@@ -31,13 +57,17 @@ export class Result {
   }
 }
 
-
-
-export class FunctionVisitor extends AbstractParseTreeVisitor<Result> implements KrrgScriptVisitor<Result> {
+export class FunctionVisitor
+  extends AbstractParseTreeVisitor<Result>
+  implements KrrgScriptVisitor<Result>
+{
   private idMap: Map<string, number>;
   private functionMap: Map<string, FunctionDeclarationContext>;
   private builtin: BuiltinFunctions;
-  constructor(functionMap: Map<string, FunctionDeclarationContext>, builtin: BuiltinFunctions) {
+  constructor(
+    functionMap: Map<string, FunctionDeclarationContext>,
+    builtin: BuiltinFunctions
+  ) {
     super();
     this.idMap = new Map();
     this.functionMap = functionMap;
@@ -134,28 +164,32 @@ export class FunctionVisitor extends AbstractParseTreeVisitor<Result> implements
   assignmentExpression(ctx: AssignmentExpressionContext): number {
     const op = ctx.ASSIGNMENT_OPERATOR();
     if (op) {
-      if (op.text == '=') {
+      if (op.text == "=") {
         const expression = ctx.expression();
         const id = ctx.VARIABLE_IDENTIFIER();
         const value = expression ? this.expression(expression) : 0;
-        this.idMap.set(id ? id.text : '', value);
+        this.idMap.set(id ? id.text : "", value);
         return value;
       } else {
         throw new UnimplementedParseError(ctx.start.line, op.text);
       }
     }
     const logicalOrExpression = ctx.logicalOrExpression();
-    return logicalOrExpression ? this.logicalOrExpression(logicalOrExpression) : 0;
+    return logicalOrExpression
+      ? this.logicalOrExpression(logicalOrExpression)
+      : 0;
   }
 
   logicalOrExpression(ctx: LogicalOrExpressionContext): number {
     const op = ctx.LOGICAL_OR_OPERATOR();
     if (op) {
-      if (op.text == '||') {
+      if (op.text == "||") {
         const logicalOrExpression = ctx.logicalOrExpression();
-        const left = logicalOrExpression ? this.logicalOrExpression(logicalOrExpression) : 0;
+        const left = logicalOrExpression
+          ? this.logicalOrExpression(logicalOrExpression)
+          : 0;
         const right = this.logicalAndExpression(ctx.logicalAndExpression());
-        const result = (left !== 0) || (right !== 0);
+        const result = left !== 0 || right !== 0;
         return result ? 1 : 0;
       } else {
         throw new UnimplementedParseError(ctx.start.line, op.text);
@@ -168,10 +202,12 @@ export class FunctionVisitor extends AbstractParseTreeVisitor<Result> implements
     const op = ctx.LOGICAL_AND_OPERATOR();
     if (op) {
       const logicalAndExpression = ctx.logicalAndExpression();
-      const left = logicalAndExpression ? this.logicalAndExpression(logicalAndExpression) : 0;
+      const left = logicalAndExpression
+        ? this.logicalAndExpression(logicalAndExpression)
+        : 0;
       const right = this.equalityExpression(ctx.equalityExpression());
-      if (op.text == '&&') {
-        const result = (left !== 0) && (right !== 0);
+      if (op.text == "&&") {
+        const result = left !== 0 && right !== 0;
         return result ? 1 : 0;
       } else {
         throw new UnimplementedParseError(ctx.start.line, op.text);
@@ -184,12 +220,14 @@ export class FunctionVisitor extends AbstractParseTreeVisitor<Result> implements
     const op = ctx.EQUALITY_OPERATOR();
     if (op) {
       const equalityExpression = ctx.equalityExpression();
-      const left = equalityExpression ? this.equalityExpression(equalityExpression) : 0;
+      const left = equalityExpression
+        ? this.equalityExpression(equalityExpression)
+        : 0;
       const right = this.relationalExpression(ctx.relationalExpression());
-      if (op.text == '==') {
+      if (op.text == "==") {
         const result = left === right;
         return result ? 1 : 0;
-      } else if (op.text == '!=') {
+      } else if (op.text == "!=") {
         const result = left !== right;
         return result ? 1 : 0;
       } else {
@@ -203,18 +241,20 @@ export class FunctionVisitor extends AbstractParseTreeVisitor<Result> implements
     const op = ctx.RELATIONAL_OPERATOR();
     if (op) {
       const relationalExpression = ctx.relationalExpression();
-      const left = relationalExpression ? this.relationalExpression(relationalExpression) : 0;
+      const left = relationalExpression
+        ? this.relationalExpression(relationalExpression)
+        : 0;
       const right = this.additiveExpression(ctx.additiveExpression());
-      if (op.text == '<') {
+      if (op.text == "<") {
         const result = left < right;
         return result ? 1 : 0;
-      } else if (op.text == '<=') {
+      } else if (op.text == "<=") {
         const result = left <= right;
         return result ? 1 : 0;
-      } else if (op.text == '>') {
+      } else if (op.text == ">") {
         const result = left > right;
         return result ? 1 : 0;
-      } else if (op.text == '>=') {
+      } else if (op.text == ">=") {
         const result = left >= right;
         return result ? 1 : 0;
       } else {
@@ -228,11 +268,15 @@ export class FunctionVisitor extends AbstractParseTreeVisitor<Result> implements
     const op = ctx.ADDITIVE_OPERATOR();
     if (op) {
       const additiveExpression = ctx.additiveExpression();
-      const left = additiveExpression ? this.additiveExpression(additiveExpression) : 0;
-      const right = this.multiplicativeExpression(ctx.multiplicativeExpression());
-      if (op.text == '+') {
+      const left = additiveExpression
+        ? this.additiveExpression(additiveExpression)
+        : 0;
+      const right = this.multiplicativeExpression(
+        ctx.multiplicativeExpression()
+      );
+      if (op.text == "+") {
         return left + right;
-      } else if (op.text == '-') {
+      } else if (op.text == "-") {
         return left - right;
       } else {
         throw new UnimplementedParseError(ctx.start.line, op.text);
@@ -245,13 +289,15 @@ export class FunctionVisitor extends AbstractParseTreeVisitor<Result> implements
     const op = ctx.MULTIPLICATIVE_OPERATOR();
     if (op) {
       const multiplicativeExpression = ctx.multiplicativeExpression();
-      const left = multiplicativeExpression ? this.multiplicativeExpression(multiplicativeExpression) : 0;
+      const left = multiplicativeExpression
+        ? this.multiplicativeExpression(multiplicativeExpression)
+        : 0;
       const right = this.unaryExpression(ctx.unaryExpression());
-      if (op.text == '*') {
+      if (op.text == "*") {
         return left * right;
-      } else if (op.text == '/') {
+      } else if (op.text == "/") {
         return Math.floor(left / right);
-      } else if (op.text == '%') {
+      } else if (op.text == "%") {
         return left % right;
       } else {
         throw new UnimplementedParseError(ctx.start.line, op.text);
@@ -265,14 +311,14 @@ export class FunctionVisitor extends AbstractParseTreeVisitor<Result> implements
     if (op) {
       const unaryExpression = ctx.unaryExpression();
       const value = unaryExpression ? this.unaryExpression(unaryExpression) : 0;
-      if (op.text == '+') {
-        return + value;
-      } else if (op.text == '-') {
-        return - value;
-      } else if (op.text == '!') {
-        return (value == 0) ? 1 : 0;
+      if (op.text == "+") {
+        return +value;
+      } else if (op.text == "-") {
+        return -value;
+      } else if (op.text == "!") {
+        return value == 0 ? 1 : 0;
       } else {
-        throw new UnimplementedParseError(ctx.start.line, op.text || '');
+        throw new UnimplementedParseError(ctx.start.line, op.text || "");
       }
     }
 

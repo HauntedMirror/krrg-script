@@ -1,9 +1,9 @@
 import * as React from "react";
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 import ProgramArea from "./components/ProgramArea";
-import Description from "./components/Description"
+import Description from "./components/Description";
 
 export default function Home() {
   return (
@@ -12,9 +12,13 @@ export default function Home() {
         <Typography variant="h3">くるるぎすくりぷと</Typography>
       </Box>
       <Grid container justifyContent="center" alignItems="flex-start">
-        <Grid item xs><ProgramArea /></Grid>
-        <Grid item xs><Description /></Grid>
+        <Grid item xs>
+          <ProgramArea />
+        </Grid>
+        <Grid item xs>
+          <Description />
+        </Grid>
       </Grid>
     </main>
-  )
+  );
 }

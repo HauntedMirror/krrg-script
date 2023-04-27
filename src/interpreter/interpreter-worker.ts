@@ -1,5 +1,5 @@
-import Interpreter from './interpreter';
-import { BuiltinFunctions } from './ProgramVisitor';
+import Interpreter from "./interpreter";
+import { BuiltinFunctions } from "./ProgramVisitor";
 
 interface OutputData {
   type: string;
@@ -8,27 +8,27 @@ interface OutputData {
 
 self.addEventListener("message", (e) => {
   const builtins: BuiltinFunctions = new Map();
-  builtins.set('#くるるぎはっぴょうかい', (args: number[]) => {
+  builtins.set("#くるるぎはっぴょうかい", (args: number[]) => {
     const data: OutputData = {
       type: "console",
-      data: args[0].toString()
-    }
+      data: args[0].toString(),
+    };
     self.postMessage(JSON.stringify(data));
     return args[0];
   });
-  builtins.set('#みるは〜と', (args: number[]) => {
+  builtins.set("#みるは〜と", (args: number[]) => {
     const data: OutputData = {
       type: "console",
       data: String.fromCharCode(args[0]),
-    }
+    };
     self.postMessage(JSON.stringify(data));
     return args[0];
   });
-  builtins.set('#みるは～と', (args: number[]) => {
+  builtins.set("#みるは～と", (args: number[]) => {
     const data: OutputData = {
       type: "console",
       data: String.fromCharCode(args[0]),
-    }
+    };
     self.postMessage(JSON.stringify(data));
     return args[0];
   });
@@ -49,4 +49,3 @@ self.addEventListener("message", (e) => {
     }
   }
 });
-

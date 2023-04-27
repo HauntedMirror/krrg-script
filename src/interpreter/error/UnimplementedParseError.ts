@@ -1,4 +1,4 @@
-import { ParseError } from './ParseError';
+import { ParseError } from "./ParseError";
 
 export class UnimplementedParseError extends ParseError {
   constructor(line: number, feature: string) {

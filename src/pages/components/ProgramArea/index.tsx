@@ -1,66 +1,99 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import Editor from "../Editor";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 
 import dynamic from "next/dynamic";
 const AceEditor = dynamic(async () => import("react-ace"), { ssr: false });
 
-export default function ProgramArea() {
-  const [code, setCode] = useState("");
+interface Props {}
+interface State {
+  code?: string;
+  arg?: string;
+  result?: string;
+  running?: boolean;
+}
 
-  const [arg, setArg] = useState("");
+export default class ProgramArea extends Component<Props, State> {
+  private worker: Worker | undefined;
+  private output: string;
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      code: "",
+      arg: "",
+      result: "",
+      running: false,
+    };
+    this.output = "";
+    this.terminateWorker = this.terminateWorker.bind(this);
+    this.execute = this.execute.bind(this);
+  }
 
-  const [result, setResult] = useState("");
-
-  const [state, setState] = useState("stopped");
-
-  let resultData = "";
-
-  const execute = () => {
-    resultData = "";
-    setState("running...");
-    const worker = new Worker(
+  execute() {
+    this.output = "";
+    this.setState({ running: true });
+    this.worker = new Worker(
       new URL("../../../interpreter/interpreter-worker.ts", import.meta.url)
     );
-    worker.onmessage = (message) => {
+    this.worker.onmessage = (message) => {
       const data = JSON.parse(message.data);
       if (data.type === "console") {
-        resultData = resultData + data.data;
+        this.output = this.output + data.data;
       } else if (data.type === "Error") {
-        resultData = resultData + data.data;
-        setState("stopped");
+        this.output = this.output + data.data;
+        this.setState({ running: false });
+        this.terminateWorker();
       } else if (data.type == "OK") {
-        setState("stopped");
+        this.setState({ running: false });
+        this.terminateWorker();
       }
-      setResult(resultData);
+      this.setState({ result: this.output });
     };
-    worker.postMessage(
-      JSON.stringify({ src: code, args: [Number.parseInt(arg)] })
+    this.worker.postMessage(
+      JSON.stringify({
+        src: this.state.code,
+        args: [Number.parseInt(this.state.arg || "")],
+      })
     );
-  };
-  return (
-    <Card sx={{ width: 600, margin: "auto" }}>
-      <section>
-        <Editor onChange={setCode} />
-      </section>
-      <section>
-        <input
-          type="number"
-          value={arg}
-          onChange={(e) => setArg(e.target.value)}
-        />
-        <button onClick={execute}>実行</button>
-        {state}
-      </section>
-      <section>
-        <AceEditor
-          readOnly={true}
-          height="100px"
-          value={result}
-          showGutter={false}
-        />
-      </section>
-    </Card>
-  );
+  }
+  terminateWorker() {
+    try {
+      if (this.worker) {
+        this.worker.terminate();
+      }
+    } catch (e) {
+      // pass
+    }
+    this.setState({ running: false });
+  }
+  render() {
+    return (
+      <Card sx={{ width: 600, margin: "auto" }}>
+        <section>
+          <Editor onChange={(code) => this.setState({ code: code })} />
+        </section>
+        <section>
+          <input
+            type="number"
+            value={this.state.arg}
+            onChange={(e) => this.setState({ arg: e.target.value })}
+          />
+          {this.state.running ? (
+            <button onClick={this.terminateWorker}>停止</button>
+          ) : (
+            <button onClick={this.execute}>実行</button>
+          )}
+          {this.state.running ? "running..." : "stopping"}
+        </section>
+        <section>
+          <AceEditor
+            readOnly={true}
+            height="100px"
+            value={this.state.result}
+            showGutter={false}
+          />
+        </section>
+      </Card>
+    );
+  }
 }

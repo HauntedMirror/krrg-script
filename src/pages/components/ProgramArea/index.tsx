@@ -15,10 +15,10 @@ export default function ProgramArea() {
 
   const [state, setState] = useState("stopped");
 
-  const resultData: string[] = [];
+  let resultData = "";
 
   const execute = () => {
-    resultData.splice(0);
+    resultData = "";
     setState("running...");
     const worker = new Worker(
       new URL("../../../interpreter/interpreter-worker.ts", import.meta.url)
@@ -26,16 +26,14 @@ export default function ProgramArea() {
     worker.onmessage = (message) => {
       const data = JSON.parse(message.data);
       if (data.type === "console") {
-        resultData.push(data.data);
+        resultData = resultData + data.data;
       } else if (data.type === "Error") {
-        console.log(data.data);
-        resultData.push(data.data);
+        resultData = resultData + data.data;
         setState("stopped");
       } else if (data.type == "OK") {
         setState("stopped");
       }
-      const output = resultData.join("");
-      setResult(output);
+      setResult(resultData);
     };
     worker.postMessage(
       JSON.stringify({ src: code, args: [Number.parseInt(arg)] })

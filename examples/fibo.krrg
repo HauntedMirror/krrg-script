@@ -1,0 +1,14 @@
+// n項目のフィボナッチ数を求めるプログラム（0項目から）
+krrg_mrh(krrg_sub) {
+  #くるるぎはっぴょうかい(krg_mrh(krrg_sub));
+}
+
+krg_mrh(krg_sub) {
+  krrg_sub = krrgmrh - krrgmrh; // 0
+  krrrg_sub = !krrg_sub;        // 1
+  if (krg_sub == krrg_sub || krg_sub == krrrg_sub) {
+    freeze krrrg_sub;
+  }
+  freeze krg_mrh(krg_sub - krrrg_sub)
+         + krg_mrh(krg_sub - krrrg_sub - krrrg_sub);
+}

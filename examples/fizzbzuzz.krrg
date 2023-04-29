@@ -1,0 +1,51 @@
+krrg_mrh(krrg_sub) {
+  krg_sub = !(krrgmrh - krrgmrh); // 1
+  krrrg_sub = krg_sub + krg_sub + krg_sub; // 3
+  krrrrg_sub = krrrg_sub + krg_sub + krg_sub; // 5
+  krrrrrg_sub = krg_sub;
+  while (krrrrrg_sub <= krrg_sub) {
+    if (krrrrrg_sub % (krrrg_sub * krrrrg_sub) == !krg_sub) {
+      krg_mrh();
+      krrrg_mrh();
+    } else if (krrrrrg_sub % krrrg_sub == !krg_sub) {
+      krg_mrh();
+    } else if (krrrrrg_sub % krrrrg_sub == !krg_sub) {
+      krrrg_mrh();
+    } else {
+      #くるるぎはっぴょうかい(krrrrrg_sub);
+    }
+    krrrrg_mrh();
+    krrrrrg_sub = krrrrrg_sub + krg_sub;
+  }
+}
+
+krg_mrh() {
+  krg_sub = !(krrgmrh - krrgmrh); // 1
+  krrg_sub = krg_sub + krg_sub; // 2
+  krrrg_sub = krrg_sub * krrg_sub * krrg_sub * krrg_sub * krrg_sub; // 32
+  krrrrg_sub = krrrg_sub + krrrg_sub + krrrg_sub; // 96
+  krrrrrg_sub = krrrrg_sub
+                + (krrg_sub * krrg_sub * krrg_sub) + krrg_sub + krg_sub; // k
+  #みるは～と(krrrrrg_sub);
+  krrrrrrg_sub = krrrrrg_sub + krrg_sub * krrg_sub * krrg_sub - krg_sub; // r
+  #みるは～と(krrrrrrg_sub);
+}
+
+krrrg_mrh() {
+  krg_sub = !(krrgmrh - krrgmrh); // 1
+  krrg_sub = krg_sub + krg_sub; // 2
+  krrrg_sub = krrg_sub * krrg_sub * krrg_sub * krrg_sub * krrg_sub; // 32
+  krrrrg_sub = krrrg_sub + krrrg_sub + krrrg_sub; // 96
+  krrrrrg_sub = krrrrg_sub
+                + (krrg_sub * krrg_sub * krrg_sub * krrg_sub) + krrg_sub; // r
+  #みるは～と(krrrrrg_sub);
+  krrrrrrg_sub = krrrrg_sub + krrg_sub * krrg_sub * krrg_sub - krg_sub; // g
+  #みるは～と(krrrrrrg_sub);
+}
+
+krrrrg_mrh() {
+  krg_sub = !(krrgmrh - krrgmrh); // 1
+  krrg_sub = krg_sub + krg_sub; // 2
+  krrrg_sub = krrg_sub * krrg_sub * krrg_sub + krrg_sub;
+  #みるは〜と(krrrg_sub);
+}

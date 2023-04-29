@@ -1,0 +1,14 @@
+krrg_mrh() {
+  krg_sub = !(krrgmrh - krrgmrh); // 1
+  krrg_sub = krg_sub + krg_sub; // 2
+  krrrg_sub = krrg_sub * krrg_sub * krrg_sub * krrg_sub * krrg_sub; // 32
+  krrrrg_sub = krrrg_sub + krrrg_sub + krrrg_sub; // 96
+  krrrrrg_sub = krrrrg_sub 
+                + (krrg_sub * krrg_sub * krrg_sub) + krrg_sub + krg_sub; // k
+  #みるは～と(krrrrrg_sub);
+  krrrrrrg_sub = krrrrrg_sub + krrg_sub * krrg_sub * krrg_sub - krg_sub; // r
+  #みるは～と(krrrrrrg_sub);
+  #みるは～と(krrrrrrg_sub);
+  krrrrrrrg_sub = krrrrrg_sub - krrg_sub * krrg_sub; // g
+  #みるは～と(krrrrrrrg_sub);
+}

@@ -8,10 +8,10 @@ import { FunctionDeclarationContext } from '../dist/antlr/KrrgScriptParser';
 describe("FunctionVisitor", () => {
   describe("krrgmrh", () => {
     test("krrgmrh()はデビューからの経過年を返す", () => {
-      expect(krrgmrh(new Date(2023, 4, 29))).toStrictEqual(0);
-      expect(krrgmrh(new Date(2023, 4, 30, 1))).toStrictEqual(1);
-      expect(krrgmrh(new Date(2024, 4, 29))).toStrictEqual(1);
-      expect(krrgmrh(new Date(2024, 4, 30, 1))).toStrictEqual(2);
+      expect(krrgmrh(new Date(2023, 3, 29))).toStrictEqual(0);
+      expect(krrgmrh(new Date(2023, 3, 30, 1))).toStrictEqual(1);
+      expect(krrgmrh(new Date(2024, 3, 29))).toStrictEqual(1);
+      expect(krrgmrh(new Date(2024, 3, 30, 1))).toStrictEqual(2);
     });
   });
 

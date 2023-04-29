@@ -22,16 +22,17 @@ statement
     | whileStatement
     | jumpStatement
     | emptyStatement
+    | compoundStatement
     ;
 
 expressionStatement: expression ';';
 
 selectionStatement
-    : IF '(' expression ')' compoundStatement
-    | IF '(' expression ')' compoundStatement ELSE compoundStatement
+    : IF '(' expression ')' statement
+    | IF '(' expression ')' statement ELSE statement
     ;
 
-whileStatement: WHILE '(' expression ')' compoundStatement;
+whileStatement: WHILE '(' expression ')' statement;
 
 jumpStatement: FREEZE expression ';';
 

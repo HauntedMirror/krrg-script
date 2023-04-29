@@ -38,8 +38,8 @@ export function krrgmrh(date?: Date): number {
   const yearDiff = now.getFullYear() - krrgDebutDate.getFullYear();
   const beforeDebut =
     now.getMonth() < krrgDebutDate.getMonth() ||
-    (now.getMonth() == krrgDebutDate.getMonth() &&
-      now.getDate() < krrgDebutDate.getDate())
+      (now.getMonth() == krrgDebutDate.getMonth() &&
+        now.getDate() < krrgDebutDate.getDate())
       ? -1
       : 0;
   return yearDiff + beforeDebut;
@@ -110,6 +110,7 @@ export class FunctionVisitor
     const whileStatement = ctx.whileStatement();
     const jumpStatement = ctx.jumpStatement();
     const emptyStatement = ctx.emptyStatement();
+    const compoundStatement = ctx.compoundStatement();
     if (expressionStatement) {
       return this.expressionStatement(expressionStatement);
     } else if (selectionStatement) {
@@ -120,6 +121,8 @@ export class FunctionVisitor
       return this.jumpStatement(jumpStatement);
     } else if (emptyStatement) {
       return this.emptyStatement(emptyStatement);
+    } else if (compoundStatement) {
+      return this.compoundStatement(compoundStatement);
     }
     throw new UndefinedParseError(ctx.start.line);
   }
@@ -131,10 +134,10 @@ export class FunctionVisitor
   selectionStatement(ctx: SelectionStatementContext): Result {
     const cond = this.expression(ctx.expression());
     if (cond != 0) {
-      return this.compoundStatement(ctx.compoundStatement(0));
+      return this.statement(ctx.statement(0));
     }
     if (ctx.ELSE()) {
-      return this.compoundStatement(ctx.compoundStatement(1));
+      return this.statement(ctx.statement(1));
     }
     return new Result(false);
   }
@@ -145,7 +148,7 @@ export class FunctionVisitor
       if (this.expression(ctx.expression()) == 0) {
         return result;
       }
-      result = this.compoundStatement(ctx.compoundStatement());
+      result = this.statement(ctx.statement());
     }
   }
 

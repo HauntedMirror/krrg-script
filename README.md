@@ -97,6 +97,10 @@ freeze が呼ばれずに終了した場合、戻り値は`krrgmrh`になりま�
 #くるるぎはっぴょうかい はファンアートタグです。
 ```
 
+# サンプルプログラム
+
+[ここにあります](https://github.com/HauntedMirror/krrg-script/tree/main/examples)
+
 # スペシャルサンクス
 
 背景の画像は Philё 様([twitter](https://twitter.com/Philerbel531))に描いていただきました。

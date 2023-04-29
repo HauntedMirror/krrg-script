@@ -1,3 +1,5 @@
+// krrgと出力します。
+
 krrg_mrh() {
   krg_sub = !(krrgmrh - krrgmrh); // 1
   krrg_sub = krg_sub + krg_sub; // 2

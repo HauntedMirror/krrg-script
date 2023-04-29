@@ -1,3 +1,4 @@
+// 1から順に、3の倍数ではkr、5の倍数ではrg、15の倍数ではkrrg、どれにも当てはまらないときはその数字を数え上げます。
 krrg_mrh(krrg_sub) {
   krg_sub = !(krrgmrh - krrgmrh); // 1
   krrrg_sub = krg_sub + krg_sub + krg_sub; // 3

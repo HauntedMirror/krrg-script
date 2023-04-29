@@ -33,7 +33,7 @@ import { NameNotFoundError } from "./error/NameNotFoundError";
 import { BuiltinFunctions } from "./ProgramVisitor";
 
 export function krrgmrh(date?: Date): number {
-  const krrgDebutDate = new Date(2022, 4, 30);
+  const krrgDebutDate = new Date(2022, 3, 30);
   const now = date || new Date();
   const yearDiff = now.getFullYear() - krrgDebutDate.getFullYear();
   const beforeDebut =

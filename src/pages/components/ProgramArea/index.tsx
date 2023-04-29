@@ -88,6 +88,7 @@ export default class ProgramArea extends Component<Props, State> {
         <section>
           <AceEditor
             readOnly={true}
+            mode="text"
             height="100px"
             value={this.state.result}
             showGutter={false}

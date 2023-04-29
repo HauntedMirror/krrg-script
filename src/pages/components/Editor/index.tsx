@@ -11,7 +11,7 @@ type propsType = {
 export function Editor(props: propsType) {
   return (
     <Box>
-      <AceEditor onChange={props.onChange} width="100%" />
+      <AceEditor onChange={props.onChange} width="100%" mode="text" />
     </Box>
   );
 }

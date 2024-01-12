@@ -1,6 +1,6 @@
 # くるるぎすくりぷと
 
-VTuber の枢木みるはさん([Twitter](https://twitter.com/krrgmrh))([YouTube](https://www.youtube.com/c/KururugiMiruha))の 1 周年を祝うために作成したものです。
+VTuber の枢木みるはさん([Twitter](https://twitter.com/Miruha_krrg))([YouTube](https://www.youtube.com/c/KururugiMiruha))の 1 周年を祝うために作成したものです。
 
 ## 例
 
@@ -28,7 +28,7 @@ krrg_mrh(krrg_sub) {
 `krrgmrh`で枢木みるはのデビューから経過した年数が切り捨てで得られます。
 
 ```text
-krrgmrh は現在（2023/4/30）の Twitter アカウントの ID です。
+krrgmrh はデビュー時点（2023/4/30）の Twitter アカウントの ID でしたが、後に凍結されました。
 ```
 
 ## 変数
@@ -92,7 +92,7 @@ freeze が呼ばれずに終了した場合、戻り値は`krrgmrh`になりま�
 引数を文字として出力します。
 
 ```text
-#くるるぎはっぴょうかい はファンアートタグです。
+#みるは〜と はファンアートタグです。
 ```
 
 # サンプルプログラム
